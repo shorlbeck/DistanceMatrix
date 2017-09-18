@@ -43,15 +43,15 @@ use MartijnOud\DistanceMatrix\DistanceMatrix;
 
 $distanceMatrix = new DistanceMatrix(YOUR_API_KEY_HERE);
 
-$distance = $distanceMatrix->distance([
+$result = $distanceMatrix->distance([
 	'origins' => 'Leith', 
 	'destinations' => 'Arques',
 	'mode' => 'walking',
 	'language' => 'en-GB',
 ]);
 
-if ($distance > 0) {
-	echo "I would walk " . $distance * 0.00062137119 . " miles"; // I would walk 493.88322020532 miles
+if ($result["distance"] > 0) {
+	echo "I would walk " . $result["distance"] * 0.00062137119 . " miles"; // I would walk 493.88322020532 miles
 }
 ````
 
