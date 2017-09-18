@@ -125,6 +125,53 @@ class DistanceMatrix {
 	}
 
 	/**
+	 * Generate a static image with directions between to points
+	 * curl is required
+	 * uses the Google Static Maps API. Make sure your $this-key has premission to use this API
+	 * @param array
+	 *        REQUIRED:
+	 *        origins = streetname house_nr city country
+	 *        destinations = streetname house_nr city country
+	 * @return string image url OR false
+	 */
+	public function mapDirections($data = array()) {
+
+		// Required variables
+		if (empty($data['origins']) OR empty($data['destinations'])) {
+			trigger_error("Not all required parameters are set", E_USER_ERROR);
+			exit();
+		}
+
+		$encpoly = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $data['origins'] . "&destination=" . $data['destinations'] . "&mode=driving";
+
+		if (!empty($this->key)) {
+			$encpoly .= "&key=" . $this->key;
+		}
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL, $encpoly);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		$json = json_decode($result, true);
+
+		$url = "https://maps.googleapis.com/maps/api/staticmap?" . "size=" . $data['size'] . "&path=enc:" . $json["routes"][0]["overview_polyline"]["points"];
+		if (!empty($this->key)) {
+			$url .= "&key=" . $this->key;
+		}
+		if (!empty($data['scale'])) {
+			$url .= "&scale=" . $data['scale'];
+		}
+
+		if (@!getimagesize($url)) {
+			return false;
+		} else {
+			return $url;
+		}
+	}
+
+	/**
 	 * Make a call to $url and download its contents with cURL
 	 * @param string $url
 	 * @return json_decoded contents of $url
