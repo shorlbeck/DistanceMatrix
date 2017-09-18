@@ -148,15 +148,9 @@ class DistanceMatrix {
 			$encpoly .= "&key=" . $this->key;
 		}
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, $encpoly);
-		$result = curl_exec($ch);
-		curl_close($ch);
-		$json = json_decode($result, true);
+		$json = static::call($encpoly);
 
-		$url = "https://maps.googleapis.com/maps/api/staticmap?" . "size=" . $data['size'] . "&path=enc:" . $json["routes"][0]["overview_polyline"]["points"];
+		$url = "https://maps.googleapis.com/maps/api/staticmap?" . "size=" . $data['size'] . "&path=enc:" . $json->routes[0]->overview_polyline->points;
 		if (!empty($this->key)) {
 			$url .= "&key=" . $this->key;
 		}
@@ -176,7 +170,7 @@ class DistanceMatrix {
 	 * @param string $url
 	 * @return json_decoded contents of $url
 	 */
-	private function call($url) {
+	private static function call($url) {
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_HEADER, false);
