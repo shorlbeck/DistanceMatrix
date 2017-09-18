@@ -4,11 +4,8 @@ Very simple API Wrapper for Google's DistanceMatrix API. Enter two addresses and
 
 ## Install
 
-Install using composer:
+Include DistanceMatrix.php in your project.
 
-```
-$ composer require martijnoud/distancematrix
-```
 
 ## Basic usage
 Calculate the distance in meters between the [Inktweb.nl office](https://www.inktweb.nl/) and Paleis Noordeinde in the Hague.
