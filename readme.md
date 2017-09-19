@@ -53,10 +53,11 @@ if ($result["distance"] > 0) {
 ````
 
 ## Generating a map with directions
+Make sure to enable API capabilities in your developer console:  Google Maps Directions, Google Maps Distance Matrix API
 ```php
 use MartijnOud\DistanceMatrix\DistanceMatrix;
 
-$distanceMatrix = new DistanceMatrix();
+$distanceMatrix = new DistanceMatrix(YOUR_API_KEY_HERE);
 
 $image = $distanceMatrix->mapDirections(array(
 	'origins' => 'Prof. van der Waalsstraat 2 Alkmaar', // required
