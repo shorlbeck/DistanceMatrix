@@ -15,7 +15,7 @@ use MartijnOud\DistanceMatrix\DistanceMatrix;
 $distanceMatrix = new DistanceMatrix(YOUR_API_KEY_HERE);
 
 $result = $distanceMatrix->distance([
-    'origins' => 'Prof. van der Waalsstraat 2 Alkmaar', 
+    'origins' => 'Prof. van der Waalsstraat 2 Alkmaar',
     'destinations' => 'Paleis Noordeinde Den Haag'
 ]);
 
@@ -41,7 +41,7 @@ use MartijnOud\DistanceMatrix\DistanceMatrix;
 $distanceMatrix = new DistanceMatrix(YOUR_API_KEY_HERE);
 
 $result = $distanceMatrix->distance([
-	'origins' => 'Leith', 
+	'origins' => 'Leith',
 	'destinations' => 'Arques',
 	'mode' => 'walking',
 	'language' => 'en-GB',
@@ -51,6 +51,25 @@ if ($result["distance"] > 0) {
 	echo "I would walk " . $result["distance"] * 0.00062137119 . " miles"; // I would walk 493.88322020532 miles
 }
 ````
+
+## Generating a map with directions
+```php
+use MartijnOud\DistanceMatrix\DistanceMatrix;
+
+$distanceMatrix = new DistanceMatrix();
+
+$image = $distanceMatrix->mapDirections(array(
+	'origins' => 'Prof. van der Waalsstraat 2 Alkmaar', // required
+	'destinations' => 'Amsterdam', // required
+	'size' => '728x200',
+	'scale' => 1)
+);
+
+if ($image) {
+	echo '<img src="'.$image.'" />';
+}
+
+```
 
 ## Generating a map
 An API key is not required for this. If you do supply a key make sure this key has premission to use the Static Map API.

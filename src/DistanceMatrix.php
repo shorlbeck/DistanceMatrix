@@ -142,7 +142,11 @@ class DistanceMatrix {
 			exit();
 		}
 
-		$encpoly = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $data['origins'] . "&destination=" . $data['destinations'] . "&mode=driving";
+		if (empty($data['mode'])) {
+			$data['mode'] = "driving";
+		}
+
+		$encpoly = "https://maps.googleapis.com/maps/api/directions/json?origin=" . $data['origins'] . "&destination=" . $data['destinations'] . "&mode=" . $data['mode'];
 
 		if (!empty($this->key)) {
 			$encpoly .= "&key=" . $this->key;
